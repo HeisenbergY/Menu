@@ -1,14 +1,22 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
+    <Header></Header>
+    <MenuList></MenuList>
     <router-view/>
   </div>
 </template>
 
 <script>
-export default {
-  name: 'app'
-}
+  import Header from 'components/Header/Header';
+  import MenuList from 'components/MenuList/MenuList';
+
+  export default {
+    name: 'app',
+    components: {
+      Header,
+      MenuList
+    }
+  }
 </script>
 
 <style>

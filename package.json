@@ -10,8 +10,11 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "less-loader": "^4.0.5",
     "vue": "^2.5.2",
-    "vue-router": "^3.0.1"
+    "vue-router": "^3.0.1",
+    "vux": "^2.7.5",
+    "vux-loader": "^1.1.28"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
