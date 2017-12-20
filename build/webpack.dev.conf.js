@@ -10,12 +10,11 @@ const portfinder = require('portfinder')
 
 //加载本地mock数据
 //TODO:注意还要在devServer: {这里面添加before(app)这一段
-var express = require('express');
-var app = express();
-var appData = require('../data/data.json');
-var appData1 = require('../data.json');
-var data = appData.result;
-var apiRoutes = express.Router();
+const express = require('express');
+const app = express();
+const appData = require('../data/data.json');
+const data = appData.result;
+const apiRoutes = express.Router();
 app.use('/api', apiRoutes);
 
 const HOST = process.env.HOST
