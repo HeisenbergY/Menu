@@ -1,7 +1,5 @@
 <template>
   <div id="app">
-    <Header></Header>
-    <MenuList></MenuList>
     <keep-alive>
       <router-view/>
     </keep-alive>
@@ -9,16 +7,6 @@
 </template>
 
 <script>
-  import Header from 'components/Header/Header';
-  import MenuList from 'components/MenuList/MenuList';
-
-  export default {
-    name: 'app',
-    components: {
-      Header,
-      MenuList
-    }
-  }
 </script>
 
 <style>

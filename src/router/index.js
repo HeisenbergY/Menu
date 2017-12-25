@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import App from '../App'
-import header from 'components/Header/Header';
-Vue.use(Router)
+import MenuList from 'components/MenuList/MenuList';
+import basket from 'components/basket/basket';
+Vue.use(Router);
 
 let router = new Router({
   routes: [
@@ -12,17 +12,16 @@ let router = new Router({
     {
       path: '/detail',
       name: 'detail',
-      component: header
     },
     {
       path: '/list',
       name: 'list',
-      component: header
+      component: MenuList
     },
     {
       path: '/basket',
       name: 'basket',
-      component: header
+      component: basket
     }
   ],
   linkActiveClass: 'active'
