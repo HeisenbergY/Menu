@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import MenuList from 'components/MenuList/MenuList';
 import basket from 'components/basket/basket';
+import detail from 'components/detail/detail';
 Vue.use(Router);
 
 let router = new Router({
@@ -12,6 +13,7 @@ let router = new Router({
     {
       path: '/detail',
       name: 'detail',
+      component: detail
     },
     {
       path: '/list',
