@@ -30,6 +30,14 @@
         </div>
       </div>
       <hr style="clear: both;color: #FCFCFC;margin-top: 10px"/>
+      <div>
+        <div v-for="(d, i) in data.steps">
+          <div style="text-align: left;font-size: 16px;margin: 10px 0;font-weight: bold">步骤  {{i+1}}</div>
+          <img :src="d.img" style="width: 100%;"/>
+          <div style="text-align: left;margin: 10px 0;font-size: 14px;line-height: 25px">{{d.step|cleanStepText}}</div>
+          <hr/>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -58,6 +66,10 @@
           return val[0] + ' | ' + val[1];
         }
         return val[0];
+      },
+      cleanStepText: function (val) {
+        val = val.split('.');
+        return val[1];
       }
     },
     created() {

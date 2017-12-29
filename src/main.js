@@ -5,6 +5,8 @@ import App from './App'
 import router from './router'
 import vuei18n from 'vue-i18n'
 import VueResouce from 'vue-resource';
+import 'common/css/font-awesome.css'
+
 Vue.config.productionTip = false
 Vue.use(vuei18n);
 Vue.use(VueResouce);

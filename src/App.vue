@@ -1,12 +1,18 @@
 <template>
   <div id="app">
-    <keep-alive>
-      <router-view/>
-    </keep-alive>
+    <router-view/>
+    <foot></foot>
   </div>
 </template>
 
 <script>
+  import foot from 'components/foot/foot';
+
+  export default {
+    components: {
+      foot,
+    },
+  }
 </script>
 
 <style>
