@@ -62,23 +62,37 @@
     },
     methods: {
       operateBasket: function (id) {
-        if(this.emptyBasket){
+        if (this.emptyBasket) {
           this.trowToBasket = "移出篮子";
-          let temp={};
-          temp[id]=this.material;
+          let temp = {}, hasKey = false;
+          temp[id] = this.material;
           //TODO:localStorage push数组内容
-          if(!localStorage.arr){
+          if (!localStorage.arr) {
             localStorage.setItem("arr", JSON.stringify([temp]));
           }
           var arr = JSON.parse(localStorage.getItem("arr"));
-          /*for(let i=0;i<arr.length;i++){
-            if()
-          }*/
-          arr.push(temp);
+          for (let i = 0; i < arr.length; i++) {//判断该id数据是否已经被添加,避免重复添加
+            if (arr[i][id]) {
+              hasKey = true;
+            }
+          }
+          if (!hasKey) {
+            arr.push(temp);
+          }
           localStorage.setItem("arr", JSON.stringify(arr));
           console.log(localStorage.arr);
-        }else{
+        } else {
           this.trowToBasket = "丢进篮子";
+
+          let temp=[];
+          let arr = JSON.parse(localStorage.getItem("arr"));
+          for (let i = 0; i < arr.length; i++) {
+            if (!arr[i][id]) {
+              temp.push(arr[i]);
+            }
+          }
+          localStorage.setItem("arr", JSON.stringify(temp));
+          console.log(localStorage.arr);
         }
 
         this.emptyBasket = !this.emptyBasket;
