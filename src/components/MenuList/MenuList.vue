@@ -3,8 +3,12 @@
     <Header :title="title" :showBasket="showBasket" :toPage="toPage"></Header>
     <ul>
       <li v-for="d in data" style="list-style-type: none;margin: 18px;">
-        <div @click="detail(d)" style="height: 160px;overflow: hidden;;background-size: 100%;background-position:center" :style="{backgroundImage: 'url(' +d.albums[0]+ ')'}">
-        </div >
+        <router-link :to="{name: 'detail', params: {dataObj: d}}">
+          <div
+            style="height: 160px;overflow: hidden;;background-size: 100%;background-position:center"
+            :style="{backgroundImage: 'url(' +d.albums[0]+ ')'}">
+          </div>
+        </router-link>
         <div style="overflow: hidden">
           <div style="float: left;">
             <div style="margin: 10px 0;font-size: 16px;font-weight: bold;text-align: left">{{d.title}}</div>
@@ -40,28 +44,18 @@
         this.data = res;
       });
     },
-    methods: {
-      detail: function (d) {
-        this.$router.push({
-          path: '/detail',
-          name: 'detail',
-          params: {
-            dataObj: d
-          }
-        })
-      },
-    },
+    methods: {},
   }
 </script>
 
-<style>
-.tags{
-  width: 200px;
-  text-overflow:ellipsis;
-  white-space:nowrap;
-  overflow:hidden;
-  font-size: 14px;
-  text-align: left;
-  color: #e3e3e3
-}
+<style scoped>
+  .tags {
+    width: 200px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    font-size: 14px;
+    text-align: left;
+    color: #e3e3e3
+  }
 </style>

@@ -19,7 +19,7 @@
       <div style="overflow: hidden;margin: 20px 0;font-size: 18px">
         <div style="float: left;font-weight: bold">用料</div>
         <div style="float: right">
-          <a style="color: orangered;">丢进篮子</a>
+          <a style="color: orangered;" @click="operateBasket(data.id)">{{trowToBasket}}</a>
         </div>
       </div>
       <div v-for="m in material" style="margin: 15px 0;font-size: 18px">
@@ -32,7 +32,7 @@
       <hr style="clear: both;color: #FCFCFC;margin-top: 10px"/>
       <div>
         <div v-for="(d, i) in data.steps">
-          <div style="text-align: left;font-size: 16px;margin: 10px 0;font-weight: bold">步骤  {{i+1}}</div>
+          <div style="text-align: left;font-size: 16px;margin: 10px 0;font-weight: bold">步骤 {{i+1}}</div>
           <img :src="d.img" style="width: 100%;"/>
           <div style="text-align: left;margin: 10px 0;font-size: 14px;line-height: 25px">{{d.step|cleanStepText}}</div>
           <hr/>
@@ -52,13 +52,38 @@
         showBasket: true,
         toPage: "",
         data: this.$route.params.dataObj,
-        material: []
+        material: [],
+        emptyBasket: true,
+        trowToBasket: "丢进篮子"
       }
     },
     components: {
       Header,
     },
-    methods: {},
+    methods: {
+      operateBasket: function (id) {
+        if(this.emptyBasket){
+          this.trowToBasket = "移出篮子";
+          let temp={};
+          temp[id]=this.material;
+          //TODO:localStorage push数组内容
+          if(!localStorage.arr){
+            localStorage.setItem("arr", JSON.stringify([temp]));
+          }
+          var arr = JSON.parse(localStorage.getItem("arr"));
+          /*for(let i=0;i<arr.length;i++){
+            if()
+          }*/
+          arr.push(temp);
+          localStorage.setItem("arr", JSON.stringify(arr));
+          console.log(localStorage.arr);
+        }else{
+          this.trowToBasket = "丢进篮子";
+        }
+
+        this.emptyBasket = !this.emptyBasket;
+      }
+    },
     filters: {
       splitTags: function (val) {
         val = val.split(';');
@@ -70,10 +95,19 @@
       cleanStepText: function (val) {
         val = val.split('.');
         return val[1];
-      }
+      },
     },
     created() {
       let d = this.data.ingredients;
+      d = d.split(';');
+      for (let i = 0; i < d.length; i++) {
+        let tmp = [], tmd;
+        tmd = d[i].split(',');
+        tmp.push(tmd[0], tmd[1]);
+        this.material.push(tmp);
+      }
+
+      d = this.data.burden;
       d = d.split(';');
       for (let i = 0; i < d.length; i++) {
         let tmp = [], tmd;
