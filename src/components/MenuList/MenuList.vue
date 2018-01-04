@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Header :title="title" :showBasket="showBasket" :toPage="toPage"></Header>
+    <Header :title="title" :showBasket="showBasket" :toPage="toPage" :count="count"></Header>
     <ul>
       <li v-for="d in data" style="list-style-type: none;margin: 18px;">
         <router-link :to="{name: 'detail', params: {dataObj: d}}">
@@ -32,7 +32,8 @@
         title: "本周菜单精选",
         toPage: "basket",
         showBasket: true,
-        data: []
+        data: [],
+        count:0
       }
     },
     components: {
@@ -43,6 +44,10 @@
         res = res.body.data.data;
         this.data = res;
       });
+
+      if (localStorage.getItem("arr")) {
+        this.count = JSON.parse(localStorage.getItem("arr")).length;
+      }
     },
     methods: {},
   }

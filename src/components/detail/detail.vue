@@ -1,6 +1,6 @@
 <template>
   <div class="detail">
-    <Header :title="title" :toPage="toPage"></Header>
+    <Header :title="title" :toPage="toPage" :count="count" :showBasket="showBasket"></Header>
     <div class="bg" :style="{backgroundImage: 'url(' +data.albums[0]+ ')'}">
     </div>
     <div class="title">{{data.title}}</div>
@@ -19,7 +19,7 @@
       <div style="overflow: hidden;margin: 20px 0;font-size: 18px">
         <div style="float: left;font-weight: bold">用料</div>
         <div style="float: right">
-          <a style="color: orangered;" @click="operateBasket(data.id)">{{trowToBasket}}</a>
+          <a style="color: orangered;" @click="operateBasket(data.title)">{{trowToBasket}}</a>
         </div>
       </div>
       <div v-for="m in material" style="margin: 15px 0;font-size: 18px">
@@ -50,29 +50,29 @@
       return {
         title: "开始做",
         showBasket: true,
-        toPage: "",
+        toPage: "basket",
         data: this.$route.params.dataObj,
         material: [],
-        emptyBasket: true,
-        trowToBasket: "丢进篮子"
+        trowToBasket: "丢进篮子",
+        count: 0
       }
     },
     components: {
       Header,
     },
     methods: {
-      operateBasket: function (id) {
-        if (this.emptyBasket) {
+      operateBasket: function (title) {
+        if (this.trowToBasket==="丢进篮子") {
           this.trowToBasket = "移出篮子";
           let temp = {}, hasKey = false;
-          temp[id] = this.material;
+          temp[title] = this.material;
           //TODO:localStorage push数组内容
           if (!localStorage.arr) {
             localStorage.setItem("arr", JSON.stringify([temp]));
           }
           var arr = JSON.parse(localStorage.getItem("arr"));
-          for (let i = 0; i < arr.length; i++) {//判断该id数据是否已经被添加,避免重复添加
-            if (arr[i][id]) {
+          for (let i = 0; i < arr.length; i++) {//判断该title数据是否已经被添加,避免重复添加
+            if (arr[i][title]) {
               hasKey = true;
             }
           }
@@ -80,22 +80,20 @@
             arr.push(temp);
           }
           localStorage.setItem("arr", JSON.stringify(arr));
-          console.log(localStorage.arr);
         } else {
           this.trowToBasket = "丢进篮子";
-
-          let temp=[];
+          //debugger;
+          let temp = [];
           let arr = JSON.parse(localStorage.getItem("arr"));
           for (let i = 0; i < arr.length; i++) {
-            if (!arr[i][id]) {
+            if (!arr[i][title]) {
               temp.push(arr[i]);
             }
           }
           localStorage.setItem("arr", JSON.stringify(temp));
-          console.log(localStorage.arr);
         }
 
-        this.emptyBasket = !this.emptyBasket;
+        this.count = JSON.parse(localStorage.getItem("arr")).length;
       }
     },
     filters: {
@@ -112,6 +110,7 @@
       },
     },
     created() {
+      //整理数据
       let d = this.data.ingredients;
       d = d.split(';');
       for (let i = 0; i < d.length; i++) {
@@ -128,6 +127,24 @@
         tmd = d[i].split(',');
         tmp.push(tmd[0], tmd[1]);
         this.material.push(tmp);
+      }
+
+      if (localStorage.getItem("arr")) {
+        //初始化篮子数据
+        this.count = JSON.parse(localStorage.getItem("arr")).length;
+        //判断开始时应该是添加到篮子还是移除
+        let arr = JSON.parse(localStorage.getItem("arr"));
+        let isAdd=true;
+        for (let i = 0; i < arr.length; i++) {
+          if (arr[i][this.data.title]) {
+            isAdd = false;
+          }
+        }
+        if(isAdd){
+          this.trowToBasket="丢进篮子";
+        }else{
+          this.trowToBasket="移出篮子";
+        }
       }
     }
   }
