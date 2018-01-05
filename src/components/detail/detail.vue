@@ -51,7 +51,7 @@
         title: "开始做",
         showBasket: true,
         toPage: "basket",
-        data: this.$route.params.dataObj,
+        data: JSON.parse(localStorage.getItem("dataObj")),
         material: [],
         trowToBasket: "丢进篮子",
         count: 0

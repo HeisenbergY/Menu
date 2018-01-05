@@ -65,9 +65,8 @@
       },
       click (key) {
         if(key==='clear'){
-          localStorage.arr="";
           //TODO:使用子组件向父组件传值的方法解决该问题
-          window.location.reload();
+          this.$emit('listenToChildEvent');
         }
         if(key==='merge'){
           alert('敬请期待!');
@@ -85,6 +84,7 @@
         } else {
           this.changeCount = false;
         }
+        this.basketCount=val;
       }
     }
   }

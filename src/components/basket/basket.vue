@@ -1,7 +1,7 @@
 <template>
   <div>
-    <Header :title="title" :toPage="toPage" :count="count"></Header>
-    <div v-if="!data">
+    <Header :title="title" :toPage="toPage" :count="count" @listenToChildEvent="changeCount"></Header>
+    <div v-if="data.length<1">
       <div style="margin: 45% auto;width:90%">
         <h1 style="margin-bottom: 30px;">再也不会忘记要买葱了</h1>
         <h4>将用料丢进篮子,每次去超市就不会忘记买需要买的东西了</h4>
@@ -47,16 +47,17 @@
     components: {
       Header,
     },
+    methods:{
+      changeCount:function(){
+        this.count=0;
+        localStorage.arr='';
+        this.data="";
+      }
+    },
     created() {
       if (localStorage.getItem("arr")) {
         this.data = JSON.parse(localStorage.getItem("arr"));
         this.count = this.data.length;
-        /*for(let i=0;i<data.length;i++){
-          for(let key in data){
-
-          }
-        }*/
-
       }
     }
   }

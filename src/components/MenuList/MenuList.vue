@@ -3,12 +3,10 @@
     <Header :title="title" :showBasket="showBasket" :toPage="toPage" :count="count"></Header>
     <ul>
       <li v-for="d in data" style="list-style-type: none;margin: 18px;">
-        <router-link :to="{name: 'detail', params: {dataObj: d}}">
-          <div
-            style="height: 160px;overflow: hidden;;background-size: 100%;background-position:center"
-            :style="{backgroundImage: 'url(' +d.albums[0]+ ')'}">
-          </div>
-        </router-link>
+        <div @click="toDetail(d)"
+             style="height: 160px;overflow: hidden;;background-size: 100%;background-position:center"
+             :style="{backgroundImage: 'url(' +d.albums[0]+ ')'}">
+        </div>
         <div style="overflow: hidden">
           <div style="float: left;">
             <div style="margin: 10px 0;font-size: 16px;font-weight: bold;text-align: left">{{d.title}}</div>
@@ -33,7 +31,7 @@
         toPage: "basket",
         showBasket: true,
         data: [],
-        count:0
+        count: 0
       }
     },
     components: {
@@ -49,7 +47,12 @@
         this.count = JSON.parse(localStorage.getItem("arr")).length;
       }
     },
-    methods: {},
+    methods: {
+      toDetail:function(d){
+        localStorage.setItem("dataObj", JSON.stringify(d));
+        this.$router.push('/detail');
+      }
+    },
   }
 </script>
 
